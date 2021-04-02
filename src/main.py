@@ -1,6 +1,7 @@
 import sys
 import os
 import re
+import codecs
 
 def main():
   argv = sys.argv
@@ -15,7 +16,7 @@ def main():
     (path, dirnames, filenames) = x
 
     for filename in filenames:
-      with open(f"{path}\\{filename}", "r") as file:
+      with codecs.open(f"{path}\\{filename}", "r", encoding="utf-8", errors="ignore") as file:
         line_numbers = ""
         for index, line in enumerate(file.readlines()):
           # if re.search("[^a-zA-Z]any[^a-zA-Z]", line) != None:
@@ -23,7 +24,9 @@ def main():
             line_numbers = line_numbers + f"Any at line {index + 1}\n"
         # END FOR
 
-        write_contents = write_contents + f"## {path}\\{filename}\n" + line_numbers + "\n\n"
+        if len(line_numbers) > 0:
+            write_contents = write_contents + f"## {path}\\{filename}\n" + line_numbers + "\n\n"
+        # END IF
 
     # END FOR
   # END FOR
