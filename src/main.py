@@ -1,9 +1,17 @@
+import sys
 import os
 import re
 
 def main():
+  argv = sys.argv
+  if (len(argv) != 2):
+    return
+  # END IF
+
+  root = argv[1]
+
   write_contents = ""
-  for x in os.walk("./src"):
+  for x in os.walk(root):
     (path, dirnames, filenames) = x
 
     for filename in filenames:
